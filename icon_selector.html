@@ -1,0 +1,39 @@
+ <b-modal id="modal-center" centered title="Details" v-model="save_app_action" @Ok="app.save()"
+                        @cancel="icon_options_show = false">
+                        <b-form class="b-form-modal">
+                          <b-form-group id="fieldset-horizontal" label-cols-sm="4" label-cols-lg="3" content-cols-sm
+                            content-cols-lg="7" description="Form Name to be Displayed." label="Enter the Form Name"
+                            label-for="form_name">
+                            <b-form-input id="form_name" v-model="app.save_data.name"
+                              placeholder="ex: Time off Request"></b-form-input>
+                          </b-form-group>
+                          <b-form-group id="fieldset-horizontal" label-cols-sm="4" label-cols-lg="3" content-cols-sm
+                            content-cols-lg="7" description="Icon for the form. Displayed to left of form name"
+                            label="Select Icon" label-for="form_icon">
+                            <span class="icon material-icons-outlined icon-render-before">{{app.save_data.icon}}</span>
+                            <div class="icons-input">
+                              <b-form-input v-model="app.save_data.icon" @keydown="search_icons($event)"></b-form-input>
+                              <span class="material-icons-outlined icon-input-icon"
+                                @click="icon_options_show = !icon_options_show">
+                                search
+                              </span>
+
+                              <div v-if="icon_options_show" class="icon-select-section">
+                                <div v-for="option of icon_searched_options" class="icon-option-custom"
+                                  @mouseover="focus_option($event,option)" @click="select_option($event,option)"
+                                  :id="option">
+                                  <span class="icon material-icons-outlined icon-select">{{option}}</span>
+                                  {{option}}
+                                </div>
+                                <center @click="app.scroll_to_top_icon()" style="cursor: pointer">
+                                  <span class="icon material-icons-outlined md-24">keyboard_double_arrow_up</span>
+                                </center>
+                              </div>
+                            </div>
+                          </b-form-group>
+                          <label for="rendered_form">Rendered Form Label: </label><span id="rendered_form"><span
+                              class="icon material-icons-outlined">{{app.save_data.icon}}</span>
+                            <div style="display: contents">{{app.save_data.name}}</div>
+                          </span>
+                        </b-form>
+                      </b-modal>
